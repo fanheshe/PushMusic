@@ -15,8 +15,6 @@ namespace PushMusic
 
         static async Task<int> Main(string[] args)
         {
-            string music_api = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?g_tk=5381&uin=0&format=json&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&tpl=3&page=detail&type=top&topid=36&_=1520777874472";
-
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) =>
                 {
@@ -34,7 +32,7 @@ namespace PushMusic
                 {
                     var myService = services.GetRequiredService<IMyService>();
 
-                    await myService.Execute(music_api);
+                    await myService.Execute();
                 }
                 catch (Exception ex)
                 {
@@ -50,7 +48,7 @@ namespace PushMusic
 
     public interface IMyService
     {
-        Task Execute(string music_api);
+        Task Execute();
     }
 
     public class MyService : IMyService
@@ -62,15 +60,20 @@ namespace PushMusic
             _clientFactory = clientFactory;
         }
 
-        public async Task Execute(string music_api)
+        public async Task Execute()
         {
             // push server酱 或 公众号
 
             // 给订阅的
 
+            string music_api = "http://daojia.jd.com/client?channel=wx_xcx&platform=5.0.0&platCode=mini&mpChannel=wx_xcx&appVersion=8.4.0&xcxVersion=8.3.7&appName=paidaojia&functionId=zone%2FgetNewChannelDetail&isForbiddenDialog=false&isNeedDealError=false&isNeedDealLogin=false&body=%7B%22city%22%3A%22%E7%9F%B3%E5%AE%B6%E5%BA%84%E5%B8%82%22%2C%22areaCode%22%3A142%2C%22longitude%22%3A114.55373%2C%22latitude%22%3A38.08728%2C%22coordType%22%3A2%2C%22channelId%22%3A%224053%22%2C%22refPageSource%22%3A%22%22%2C%22pageSource%22%3A%22newChannelPage%22%2C%22ctp%22%3A%22channel%22%2C%22ref%22%3A%22home%22%7D&afsImg=&lat_pos=38.08728&lng_pos=114.55373&lat=38.08728&lng=114.55373&city_id=142&deviceToken=0b81b867-2c37-47df-8c04-f59a6f60c426&deviceId=0b81b867-2c37-47df-8c04-f59a6f60c426&deviceModel=appmodel&business=undefined&traceId=0b81b867-2c37-47df-8c04-f59a6f60c4261610178452846";
+
 
             var request = new HttpRequestMessage(HttpMethod.Get,
                 music_api);
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.18(0x17001233) NetType/WIFI Language/zh_CN");
+
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
 
@@ -78,15 +81,15 @@ namespace PushMusic
             {
                 var resultStr = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<JObject>(resultStr);
-                var top4 = data["songlist"].Take(4);
-                var names = top4.Select(s=>s["data"]["albumname"].ToString()).ToArray();
-                foreach(var item in names){
-                    Console.WriteLine(item);
+                var results = data["result"]["data"];
+                foreach (var item in results)
+                {
+                    Console.WriteLine(item["data"]["name"]);
                 }
             }
             else
             {
-                //return $"StatusCode: {response.StatusCode}";
+                Console.WriteLine(response.StatusCode);
             }
         }
     }
