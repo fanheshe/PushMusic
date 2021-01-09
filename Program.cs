@@ -67,7 +67,6 @@ namespace PushMusic
             await PushMsg("提示", "监听开始");
             do
             {
-                Thread.Sleep(30000);
 
                 // push server酱 或 公众号
 
@@ -87,6 +86,7 @@ namespace PushMusic
                 if (response.IsSuccessStatusCode)
                 {
                     var resultStr = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(resultStr);
                     var data = JsonConvert.DeserializeObject<JObject>(resultStr);
 
                     if (data["code"].ToString() != "0")
@@ -95,16 +95,17 @@ namespace PushMusic
                         continue;
                     }
 
-                    await PushMsg("提示", "服务器好啦！");
+                    //await PushMsg("提示", "服务器好啦！");
 
                     try
                     {
-                        var results = data["result"]["data"];
+                        var results = data["result"]["data"][1]["data"];
                         foreach (var item in results)
                         {
-                            if (item["data"]["name"].ToString().IndexOf("超市") != -1)
+                            Console.WriteLine(item["storeName"] + " - " + (item["closeStatus"].ToString() == "0" ? "营业中" : "休息中"));
+                            if (item["storeName"].ToString().IndexOf("超市") != -1)
                             {
-                                if (item["data"]["closeStatus"].ToString() == "0")
+                                if (item["closeStatus"].ToString() == "0")
                                 {
                                     await PushMsg("粗来啦", "有货了有货了");
                                 }
@@ -113,7 +114,7 @@ namespace PushMusic
                     }
                     catch
                     {
-                        await PushMsg("错误", "解析出错啦");
+                        //await PushMsg("错误", "解析出错啦");
                     }
                 }
                 else
