@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '* * * * *'
 jobs:
   build:
 
@@ -16,7 +16,6 @@ jobs:
     # 设置服务器时区为东八区 
     - name: Set time zone
       run: sudo timedatectl set-timezone 'Asia/Shanghai'
-
 
     # .Net Core 环境
     - name: Setup .NET
