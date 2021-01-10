@@ -29,11 +29,9 @@ jobs:
     # 发布
     - name: Publish
       run: |
-        cd ./publish
-        dotnet publish --configuration Release --self-contained false --output ./bin/Publish/net5-dependent
+        dotnet publish
     
     # 运行
     - name: run
       run: |
-        cd ./publish/bin/Publish/net5-dependent
         dotnet PublishMusic.dll
