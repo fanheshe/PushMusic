@@ -124,7 +124,7 @@ namespace PushMusic
 
         private async Task PushMsg(string text, string desp)
         {
-            var pushMsg = $@"https://sc.ftqq.com/SCU136507T2147a536468e17f6df88888c92fdf9975fdb2b2448d00.send?text={text}&desp={desp}";
+            var pushMsg = $@"https://sc.ftqq.com/SCU136507T2147a536468e17f6df88888c92fdf9975fdb2b2448d00.send?text={text + new Random().Next()}&desp={desp + new Random().Next()}";
 
             var request = new HttpRequestMessage(HttpMethod.Get, pushMsg);
             var client = _clientFactory.CreateClient();
