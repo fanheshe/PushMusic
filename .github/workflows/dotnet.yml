@@ -12,10 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
-    - name : Checkout
     - uses: actions/checkout@v2
-
     
     # 设置服务器时区为东八区 
     - name: Set time zone
