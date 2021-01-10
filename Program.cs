@@ -14,7 +14,7 @@ namespace PushMusic
     class Program
     {
 
-        static async Task<int> Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) =>
@@ -43,7 +43,7 @@ namespace PushMusic
                 }
             }
 
-            return 0;
+            System.Console.ReadLine();
         }
     }
 
