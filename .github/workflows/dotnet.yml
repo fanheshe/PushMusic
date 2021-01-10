@@ -22,10 +22,6 @@ jobs:
       with:
         dotnet-version: 5.0.100
 
-    # 还原
-    - name: Restore dependencies
-      run: dotnet restore
-    
     # 发布
     - name: Publish
       run: |
