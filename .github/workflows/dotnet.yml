@@ -3,19 +3,20 @@ name: .NET
 on:
   workflow_dispatch: # 手动触发
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '*/2 * * * *'
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    
     # 设置服务器时区为东八区 
     - name: Set time zone
       run: sudo timedatectl set-timezone 'Asia/Shanghai'
 
+    # 检出
+    - name: Checkout
+    - uses: actions/checkout@v2
+    
     # .Net Core 环境
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
