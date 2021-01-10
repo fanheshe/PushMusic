@@ -63,7 +63,7 @@ namespace PushMusic
 
         public async Task Execute()
         {
-            // await PushMsg("提示", "监听开始");
+            await PushMsg("提示", "监听开始");
 
             // push server酱 或 公众号
 

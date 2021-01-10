@@ -3,7 +3,7 @@ name: .NET
 on:
   workflow_dispatch: # 手动触发
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/1 * * * *'
 jobs:
   build:
 
@@ -15,7 +15,7 @@ jobs:
 
     # 检出
     - name: Checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
     
     # .Net Core 环境
     - name: Setup .NET
