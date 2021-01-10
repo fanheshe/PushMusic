@@ -34,4 +34,5 @@ jobs:
     # 运行
     - name: run
       run: |
-        dotnet PublishMusic.dll
+        cd bin/Debug/net5.0
+        dotnet PushMusic.dll
