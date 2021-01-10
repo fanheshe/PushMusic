@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch: # 手动触发
   schedule:
     - cron: '*/10 * * * *'
@@ -28,10 +26,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     
-    # 生产
-    - name: Build
-      run: dotnet build --no-restore
+    # 发布
+    - name: Publish
+      run: |
+        cd .publish
+        dotnet publish --configuration Release --self-contained false --output ./bin/Publish/net5-dependent
     
     # 运行
     - name: run
-      run: dotnet run
+      run: |
+        cd ./publish/bin/Publish/net5-dependent
+        dotnet PublishMusic.dll
