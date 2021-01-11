@@ -89,7 +89,7 @@ namespace PushMusic
                     if (data["code"].ToString() != "0")
                     {
                         Console.WriteLine("监听中...");
-                        return;
+                        continue;
                     }
 
                     //await PushMsg("提示", "服务器好啦！");
