@@ -29,10 +29,10 @@ jobs:
     # 发布
     - name: Publish
       run: |
-        dotnet publish
+        dotnet publish --configuration Release --self-contained false --output ./publish
     
     # 运行
     - name: run
       run: |
-        cd bin/Debug/net5.0
+        cd ./publish
         dotnet PushMusic.dll
