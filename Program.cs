@@ -69,7 +69,7 @@ namespace PushMusic
 
             // 给订阅的
 
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 do
                 {
@@ -125,8 +125,6 @@ namespace PushMusic
                     }
                 } while (true);
             });
-
-
         }
 
 
